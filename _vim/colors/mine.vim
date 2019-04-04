@@ -23,7 +23,7 @@ hi Type ctermfg=24
 
 hi Number ctermfg=65
 
-hi LineNr ctermfg=59
+hi LineNr ctermbg=234 ctermfg=59
 
 hi CursorLine term=NONE cterm=NONE ctermbg=233
 
