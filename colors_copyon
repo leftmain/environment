@@ -1,0 +1,3 @@
+#!/bin/bash
+cp ~/.vim/colors/mine.vim ~/vim/_vim/colors/mine.vim
+
