@@ -15,6 +15,9 @@ hi Boolean ctermfg=23
 hi TabLineFill ctermfg=234
 hi TabLineSel ctermfg=240 ctermbg=232
 hi TabLine term=bold cterm=NONE ctermfg=241 ctermbg=234
+hi VertSplit ctermfg=233
+hi StatusLine ctermfg=233 ctermbg=240
+hi StatusLineNC ctermfg=233 ctermbg=240
 
 " if
 hi Statement ctermfg=89
