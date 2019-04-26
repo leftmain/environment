@@ -22,6 +22,8 @@ set incsearch
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
 call vundle#rc()
 filetype plugin indent on
 Bundle 'scrooloose/nerdtree'
@@ -37,6 +39,7 @@ map <C-h> :tabprevious<CR>
 map <C-l> :tabnext<CR>
 map <C-j> 20j
 map <C-k> 20k
+map <C-t> :tabnew<CR>
 
 " other
 set splitright
