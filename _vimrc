@@ -1,7 +1,7 @@
 " \t
 set smartindent
-set tabstop=4
-set shiftwidth=4
+set tabstop=8
+set shiftwidth=8
 
 " theme
 colorscheme mine
@@ -40,6 +40,10 @@ map <C-l> :tabnext<CR>
 map <C-j> 20j
 map <C-k> 20k
 map <C-t> :tabnew<CR>
+map <C-p>4 :set tabstop=4<CR>:set shiftwidth=4<CR>
+map <C-p>8 :set tabstop=8<CR>:set shiftwidth=8<CR>
+map <C-u> <C-w>h
+map <C-i> <C-w>l
 
 " other
 set splitright
