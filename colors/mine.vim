@@ -32,4 +32,5 @@ hi Number ctermfg=65
 hi LineNr ctermbg=234 ctermfg=59
 
 hi CursorLine term=NONE cterm=NONE ctermbg=233
+hi CursorLineNr    term=bold cterm=bold ctermfg=233 gui=bold
 
