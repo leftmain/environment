@@ -7,7 +7,7 @@ endif
 let colors_name = "mine"
 
 " Colors for syntax highlighting
-hi Comment  ctermfg=22
+hi Comment  ctermfg=28
 hi Constant ctermfg=52
 hi String ctermfg=88
 hi Character ctermfg=88
