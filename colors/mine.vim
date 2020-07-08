@@ -9,8 +9,8 @@ let colors_name = "mine"
 " Colors for syntax highlighting
 hi Comment  ctermfg=28
 hi Constant ctermfg=52
-hi String ctermfg=88
-hi Character ctermfg=88
+hi String ctermfg=124
+hi Character ctermfg=124
 hi Boolean ctermfg=23
 hi TabLineFill ctermfg=234
 hi TabLineSel ctermfg=244 ctermbg=232
@@ -25,7 +25,7 @@ hi Statement ctermfg=89
 hi PreProc ctermfg=89
 hi Special ctermfg=90
 
-hi Type ctermfg=24
+hi Type ctermfg=31
 
 hi Number ctermfg=65
 
