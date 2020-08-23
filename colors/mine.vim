@@ -8,7 +8,7 @@ let colors_name = "mine"
 
 " Colors for syntax highlighting
 hi Comment  ctermfg=28
-hi Constant ctermfg=52
+hi Constant ctermfg=124
 hi String ctermfg=124
 hi Character ctermfg=124
 hi Boolean ctermfg=23
@@ -33,4 +33,7 @@ hi LineNr ctermbg=234 ctermfg=59
 
 hi CursorLine term=NONE cterm=NONE ctermbg=233
 hi CursorLineNr    term=bold cterm=bold ctermfg=233 gui=bold
+
+hi Visual term=NONE cterm=NONE ctermbg=232
+
 
