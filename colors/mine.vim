@@ -35,5 +35,6 @@ hi CursorLine term=NONE cterm=NONE ctermbg=233
 hi CursorLineNr    term=bold cterm=bold ctermfg=233 gui=bold
 
 hi Visual term=NONE cterm=NONE ctermbg=232
+hi Search term=NONE cterm=NONE ctermfg=236 ctermbg=251
 
 
