@@ -107,12 +107,16 @@ bindsym $mod+Shift+d exec --no-startup-id rofi -show window -theme solarized
 
 
 # Start Applications
-bindsym $mod+F7 exec gnome-terminal -e 'pulsemixer'
-bindsym $mod+F9 exec nautilus -w
-bindsym $mod+F10 exec blueman-manager
-bindsym $mod+F11 exec gnome-terminal -e 'ranger'
+bindsym $mod+F7 exec gnome-terminal -- 'pulsemixer'
+bindsym $mod+F9 exec gnome-control-center
+bindsym $mod+F10 exec blueberry
+bindsym $mod+Shift+F10 exec "if [ $(cat /sys/class/rfkill/rfkill0/state) -eq 1 ]; then rfkill block 0; else rfkill unblock 0; fi"
+#bindsym $mod+F10 exec blueman-manager
+bindsym $mod+F11 exec gnome-terminal -- 'ranger'
+bindsym $mod+Shift+F11 exec nautilus -w
 bindsym $mod+F12 exec firefox
 bindsym Print exec gnome-screenshot -i -a
+
 
 
 # change focus
@@ -275,8 +279,8 @@ bindsym $mod+i workspace next
 bindsym $mod+u workspace prev
 
 # Win+Backspace lockes screen
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-bindcode $mod+22 exec i3lock -c 3b4f45 && systemctl suspend
+#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+#bindcode $mod+22 exec i3lock -c 3b4f45 && systemctl suspend
 
 # conky
 #exec --no-startup-id conky
@@ -286,7 +290,8 @@ bindcode $mod+22 exec i3lock -c 3b4f45 && systemctl suspend
 exec --no-startup-id nm-applet
 
 # bluetooth icon
-exec --no-startup-id blueman-applet
+exec --no-startup-id blueberry-tray
+#exec --no-startup-id blueman-tray
 
 # notifications
 exec --no-startup-id dunst
