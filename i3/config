@@ -227,6 +227,14 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+i move container to workspace next
 bindsym $mod+Shift+u move container to workspace prev
 
+bindsym $mod+Control+2 move container to output right
+bindsym $mod+Control+1 move container to output left
+
+bindsym $mod+Shift+Control+i move workspace to output right
+bindsym $mod+Shift+Control+u move workspace to output left
+
+bindsym $mod+Shift+Return focus output left
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -270,8 +278,10 @@ bindsym $mod+r mode "resize"
 bar {
 #        status_command ~/.config/i3script.sh
         status_command i3status
-        font pango:JetBrains Mono Regular 9
+#        status_command ~/.config/i3status/script.sh
+        font pango:JetBrains Mono Regular 10
 }
+#bindsym $mod+space killall -USR1 i3status
 
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
@@ -301,3 +311,4 @@ exec --no-startup-id dunst
 exec --no-startup-id volumeicon
 
 exec --no-startup-id i3-battery-popup -L15 -l5 -t1m -N
+
