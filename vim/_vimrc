@@ -2,6 +2,7 @@ if empty(glob("~/.vim/autoload/plug.vim"))
   execute '!curl -fLo ~/.vim/autoload/plug.vim
   \ --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
+
 " theme
 colorscheme mine
 syntax enable
@@ -25,10 +26,17 @@ set pastetoggle=
 set wildmenu
 set t_ut=
 
+set nocompatible
+filetype plugin on
+syntax on
+
 " search
 nohl
 set hlsearch
 set incsearch
+
+" keyboard layout
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
 " keys
 nnoremap <silent> <C-m> :nohl<CR><C-l>
@@ -43,7 +51,7 @@ map <C-k> 10k
 map <C-t> :tabnew<CR>
 map <C-u> <C-w>h
 map <C-i> <C-w>l
-map <C-v> <C-w>v
+map <C-v> <C-w>v<C-i>
 
 
 call plug#begin('~/.vim/plugged')
@@ -52,8 +60,31 @@ Plug 'preservim/nerdtree' ", { 'on':  'NERDTreeToggle' }
 Plug 'preservim/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'michal-h21/vim-zettel'
 
 call plug#end()
 
+let g:vimwiki_list = [{'path':'~/0/base/','ext':'.md', 'syntax':'markdown'}, {"path":"~/0/base/"}]
+let g:zettel_format="%y%m%d-%H%M-%title"
+"let g:zettel_link_format="[[%link]](%title)"
+let g:zettel_link_format="[[%link|%title]]"
+let g:vimwiki_markdown_link_ext=1
+let g:zettel_options = [{"template" :  "~/.vim/zettl_tpl.tpl"}]
+
+let g:zettel_default_mappings = 0
+" This is basically the same as the default configuration
+augroup filetype_vimwiki
+ autocmd!
+ autocmd FileType vimwiki imap <silent> [[ [[<esc><Plug>ZettelSearchMap
+ autocmd FileType vimwiki nmap T <Plug>ZettelYankNameMap
+ autocmd FileType vimwiki xmap z <Plug>ZettelNewSelectedMap
+ autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
+augroup END
+
+nnoremap zn :ZettelNew<space>
+nnoremap zo :ZettelOpen<CR>
+nnoremap zs :ZettelSearch<CR>
+nnoremap zi :ZettelInsertNote<CR>
 
 
