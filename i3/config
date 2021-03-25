@@ -9,7 +9,6 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-#set $mod Mod1
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -26,14 +25,16 @@ font pango:monospace 8
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 #exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-set $Locker i3lock -c 333333 && sleep 1
+#set $Locker i3lock -c 333333 && sleep 1
+set $Locker dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
 
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+#set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+set $mode_system System (l) lock, (e) logout, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    # bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    # bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
@@ -41,6 +42,8 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+
 
 bindsym $mod+0 mode "$mode_system"; exec xkb-switch -s us
 
@@ -67,26 +70,16 @@ mode "move" {
 
 exec "xset -b"
 
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
 # Use pactl to adjust volume in PulseAudio.
-#set $refresh_i3status killall -SIGUSR1 i3status
-#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
-bindsym XF86AudioRaiseVolume exec "pulsemixer --change-volume +5; volnoti-show $(pulsemixer --get-volume | awk '{print $1}')"
-bindsym XF86AudioLowerVolume exec "pulsemixer --change-volume -5; volnoti-show $(pulsemixer --get-volume | awk '{print $1}')"
-bindsym Shift+XF86AudioRaiseVolume exec "pulsemixer --change-volume +2; volnoti-show $(pulsemixer --get-volume | awk '{print $1}')"
-bindsym Shift+XF86AudioLowerVolume exec "pulsemixer --change-volume -2; volnoti-show $(pulsemixer --get-volume | awk '{print $1}')"
-bindsym XF86AudioMute exec "pulsemixer --toggle-mute; if [ $(pulsemixer --get-mute) == 1 ]; then volnoti-show -m ; else volnoti-show $(pulsemixer --get-volume | awk '{print $1}'); fi"
-#bindsym XF86AudioMicMute exec 
-
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
-bindsym Shift+XF86MonBrightnessUp exec "xbacklight -inc 5"
-bindsym Shift+XF86MonBrightnessDown exec "xbacklight -dec 5"
-
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -98,27 +91,20 @@ bindsym $mod+Return exec gnome-terminal #i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+#bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+d exec --no-startup-id rofi -show run -theme solarized
 bindsym $mod+Shift+d exec --no-startup-id rofi -show window -theme solarized
+# A more modern dmenu replacement is rofi:
+# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
+# There also is i3-dmenu-desktop which only displays applications shipping a
+# .desktop file. It is a wrapper around dmenu, so you need that installed.
+# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
-
-# Start Applications
-bindsym $mod+F7 exec gnome-terminal -- 'pulsemixer'
 bindsym $mod+F9 exec gnome-control-center
-bindsym $mod+F10 exec blueberry
-bindsym $mod+Shift+F10 exec "if [ $(cat /sys/class/rfkill/rfkill0/state) -eq 1 ]; then rfkill block 0; else rfkill unblock 0; fi"
-#bindsym $mod+F10 exec blueman-manager
 bindsym $mod+F11 exec gnome-terminal -- 'ranger'
 bindsym $mod+Shift+F11 exec nautilus -w
 bindsym $mod+F12 exec firefox
 bindsym Print exec gnome-screenshot -i -a
-
-
 
 # change focus
 bindsym $mod+h focus left
@@ -144,7 +130,7 @@ bindsym $mod+Shift+l move right
 #bindsym $mod+Shift+j move left
 #bindsym $mod+Shift+k move down
 #bindsym $mod+Shift+l move up
-#bindsym $mod+Shift+colon move right
+#bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -186,7 +172,7 @@ bindsym $mod+minus move scratchpad
 bindsym $mod+Shift+minus scratchpad show
 
 # focus the child container
-#bindsym $mod+Shift+0 focus child
+#bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -199,7 +185,7 @@ set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "10"
+#set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -262,10 +248,10 @@ mode "resize" {
         #bindsym semicolon resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Right resize shrink width 10 px or 10 ppt
-        bindsym Up resize grow height 10 px or 10 ppt
-        bindsym Down resize shrink height 10 px or 10 ppt
-        bindsym Left resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -278,46 +264,19 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-#        status_command ~/.config/i3script.sh
         status_command i3status
-#        status_command ~/.config/i3status/script.sh
         font pango:JetBrains Mono Regular 10
 }
-#bindsym $mod+space killall -USR1 i3status
 
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+i workspace next
 bindsym $mod+u workspace prev
 
-# Win+Backspace lockes screen
-#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-#bindcode $mod+22 exec i3lock -c 3b4f45 && systemctl suspend
 
-# conky
-#exec --no-startup-id conky
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
-
-# bluetooth icon
-exec --no-startup-id blueberry-tray
-#exec --no-startup-id blueman-tray
-
-# notifications
-exec --no-startup-id dunst
-
-exec --no-startup-id volnoti -t 1
-
-# volume icon
-exec --no-startup-id volumeicon
-
-exec --no-startup-id i3-battery-popup -L15 -l5 -t1m -N
-
-# clipboard
-exec --no-startup-id clipster -d
-
+exec_always --no-startup-id gnome-power-manager
+exec --no-startup-id gnome-flashback
 exec --no-startup-id /usr/bin/gnome-screensaver
+exec --no-startup-id gnome-sound-applet
 
 
