@@ -5,15 +5,13 @@ set -e
 sudo apt update
 sudo apt install -y neovim fzf
 
-# Clone repo if not already inside it
-REPO_DIR="$HOME/environment"
-if [ ! -d "$REPO_DIR/.git" ]; then
-  git clone https://github.com/leftmain/environment.git "$REPO_DIR"
-fi
-
-# Symlink nvim config
-mkdir -p ~/.config
-ln -sfn "$REPO_DIR/nvim" ~/.config/nvim
+# Download nvim config
+NVIM_DIR="$HOME/.config/nvim"
+mkdir -p "$NVIM_DIR/colors" "$NVIM_DIR/after/ftplugin"
+BASE_URL="https://raw.githubusercontent.com/leftmain/environment/master/nvim"
+wget -qO "$NVIM_DIR/init.lua" "$BASE_URL/init.lua"
+wget -qO "$NVIM_DIR/colors/mine.vim" "$BASE_URL/colors/mine.vim"
+wget -qO "$NVIM_DIR/after/ftplugin/c.vim" "$BASE_URL/after/ftplugin/c.vim"
 
 # Install plugins
 nvim --headless "+Lazy! sync" +qa
