@@ -23,8 +23,7 @@ wget -qO "$HOME/.vimrc" "$REPO_URL/.vimrc"
 wget -qO "$HOME/.tmux.conf" "$REPO_URL/.tmux.conf"
 
 # Install atuin
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh -o /tmp/atuin_install.sh
-yes n | sh /tmp/atuin_install.sh
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- --non-interactive
 mkdir -p "$HOME/.config/atuin"
 wget -qO "$HOME/.config/atuin/config.toml" "$REPO_URL/atuin/config.toml"
 
