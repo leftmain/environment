@@ -3,7 +3,7 @@ set -e
 
 # Install apt deps
 sudo apt update
-sudo apt install -y neovim fzf git tmux
+sudo apt install -y sudo wget curl neovim fzf git tmux
 
 REPO_URL="https://raw.githubusercontent.com/leftmain/environment/master"
 
