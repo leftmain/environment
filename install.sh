@@ -3,7 +3,7 @@ set -e
 
 # Install neovim and fzf
 sudo apt update
-sudo apt install -y neovim fzf
+sudo apt install -y neovim fzf git
 
 # Download nvim config
 NVIM_DIR="$HOME/.config/nvim"
