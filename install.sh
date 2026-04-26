@@ -3,7 +3,7 @@ set -e
 
 # Install apt deps
 sudo apt update
-sudo apt install -y wget curl neovim fzf git tmux
+sudo apt install -y wget curl neovim fzf git tmux build-essential
 
 REPO_URL="https://raw.githubusercontent.com/leftmain/environment/master"
 
@@ -29,7 +29,7 @@ wget -qO "$HOME/.config/atuin/config.toml" "$REPO_URL/atuin/config.toml"
 
 # Install Rust/cargo
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-source "$HOME/.cargo/env"
+. "$HOME/.cargo/env"
 
 # Install zellij
 cargo install --locked zellij
