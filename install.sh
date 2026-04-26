@@ -23,16 +23,22 @@ wget -qO "$HOME/.vimrc" "$REPO_URL/.vimrc"
 wget -qO "$HOME/.tmux.conf" "$REPO_URL/.tmux.conf"
 
 # Install atuin
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- --non-interactive
+if ! command -v atuin &>/dev/null; then
+  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- --non-interactive
+fi
 mkdir -p "$HOME/.config/atuin"
 wget -qO "$HOME/.config/atuin/config.toml" "$REPO_URL/atuin/config.toml"
 
 # Install Rust/cargo
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+if ! command -v cargo &>/dev/null; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi
 . "$HOME/.cargo/env"
 
 # Install zellij
-cargo install --locked zellij
+if ! command -v zellij &>/dev/null; then
+  cargo install --locked zellij
+fi
 mkdir -p "$HOME/.config/zellij"
 wget -qO "$HOME/.config/zellij/config.kdl" "$REPO_URL/zellij/config.kdl"
 
