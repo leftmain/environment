@@ -3,7 +3,7 @@ set -e
 
 # Install apt deps
 sudo apt update
-sudo apt install -y wget curl neovim fzf git tmux build-essential ranger
+sudo apt install -y wget curl neovim fzf git tmux build-essential ranger ripgrep
 
 # Setup git
 git config --global alias.st status
